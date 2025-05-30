@@ -1,0 +1,12 @@
+@font-face {
+	font-family: 'Undertale-Bold';
+	src: url('Undertale-Bold.woff') format('woff')
+		
+
+}
+
+body{
+    background-color: black;
+    color: white;
+    font-family: "Undertale-Bold", monospace;
+}
