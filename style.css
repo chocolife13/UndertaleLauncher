@@ -9,4 +9,9 @@ body{
     background-color: black;
     color: white;
     font-family: "Undertale-Bold", monospace;
+    text-align: center;
+}
+
+a{
+    color: yellow;
 }
