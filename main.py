@@ -9,7 +9,7 @@
 # TODO:
 #  - Steam version
 #  - all lang
-#   
+#  - more than 100% dpi is shit
 # 
 # DOING: 
 #  -Battle button
