@@ -12,6 +12,3 @@ Undertale Launcher is a launcher for the game Undertale that offers various usef
 **3.**   ﻿Backup indication.
    ﻿   ﻿With this launcher, you can see your backup information such as the room, the run (neutral, pacifist, or genocide), and the LV.
    ﻿   ﻿You will see a window appear at the bottom right when you save.
-
-
-Translated with DeepL.com (free version)
