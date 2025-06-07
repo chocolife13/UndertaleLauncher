@@ -1,4 +1,4 @@
-<span style="color:#fff; font-family: 'Comic Sans MS'; font-size: 4em;">Undertale Launcher - [chaîne Whatsapp](https://whatsapp.com/channel/0029Vb9tYfi7IUYTeusCq70D)
+<span style="color:#fff; font-family: 'Comic Sans MS'; ">Undertale Launcher - [chaîne Whatsapp](https://whatsapp.com/channel/0029Vb9tYfi7IUYTeusCq70D)
 
 ## Undertale Launcher est un lanceur pour le jeu Undertale qui vous propose différente fonctionnalité bien utile comme :
 
