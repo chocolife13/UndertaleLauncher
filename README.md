@@ -1,14 +1,17 @@
-<span style="font-family: 'Comic Sans MS';">Undertale Launcher - [chaîne Whatsapp](https://whatsapp.com/channel/0029Vb9tYfi7IUYTeusCq70D)
+<span style="font-family: 'Comic Sans MS';">Undertale Launcher - [WhatsApp channel](https://whatsapp.com/channel/0029Vb9tYfi7IUYTeusCq70D)
 
-## Undertale Launcher est un lanceur pour le jeu Undertale qui vous propose différente fonctionnalité bien utile comme :
+## Undertale Launcher is a launcher for the game Undertale that offers various useful features such as:
 
-**1.**   ﻿La gestion des différentes versions de Undertale.
-   ﻿   ﻿Vous pouvez télécharger une ou plusieur version du jeu (DEMO 2013, 2014, 1.0, 1.08) dans ce lanceur et vous pouvez les renommer ou les supprimer.
+**1.**   ﻿Management of different versions of Undertale.
+   ﻿   ﻿You can download one or more versions of the game (DEMO 2013, 2014, 1.0, 1.08) in this launcher and you can rename or delete them.
 
-**2.**   ﻿La gestion de plusieurs sauvegarde.
-   ﻿   ﻿Vous pouver créer des sauvegarde vide, les télécharger depuis Internet (comme Flowey's Time Machine par exemple).
-   ﻿   ﻿Sauvegarder dans AppData ou sauvegarder dans le launcher. Vous pouvez les renommer et les supprimer.
+**2.**   ﻿Management of multiple saves.
+   ﻿   ﻿You can create empty saves, download them from the Internet (such as Flowey's Time Machine, for example).
+﻿   ﻿Save to AppData or save to the launcher. You can rename and delete them.
 
-**3.**   ﻿Idication des sauvegardes.
-   ﻿   ﻿Avec ce launcher, vous pouvez voir les informations de vos sauvegarde comme la salle, la run (neutre, pasifiste ou génocide) et le LV
-   ﻿   ﻿Vous voyez une fenêtre en bas à droite apparaitre quand vous sauvegardez.</span>
+**3.**   ﻿Backup indication.
+   ﻿   ﻿With this launcher, you can see your backup information such as the room, the run (neutral, pacifist, or genocide), and the LV.
+   ﻿   ﻿You will see a window appear at the bottom right when you save.
+
+
+Translated with DeepL.com (free version)
