@@ -9,7 +9,7 @@
 # TODO:
 #  - Steam version
 #  - all lang
-#  - more than 100% dpi is shit
+#   
 # 
 # DOING: 
 #  -Battle button
@@ -43,7 +43,7 @@ print("Creation du prossesus root")
 root = tk.Tk()
 root.withdraw()
 ############### Variables d'initialisation ##########################
-
+version = "v1.1"
 var_winletter = os.environ.get("SystemDrive")
 var_launcher_path = os.getcwd()
 username = os.getlogin()
@@ -51,6 +51,29 @@ Launcher_save_dir = os.path.join(var_launcher_path, "saves")
 Launcher_version_dir = os.path.join(var_launcher_path, "versions")
 save_appdata_local = fr"{var_winletter}\Users\{username}\AppData\Local\UNDERTALE"
 
+print("checking update..")
+try:
+    update_request = requests.get("https://api.github.com/repos/chocolife13/UndertaleLauncher/tags")
+    wifi = 1
+except:
+    print("have u tested internet yet ?")
+    wifi = 0
+
+if wifi == 1:
+    if update_request.status_code == 200:
+        print("sever here")   
+        new_version = update_request.json()[0]["name"]
+        print("newest update is :" + new_version)
+        if new_version == version:
+            print("updated yet")
+        else:
+
+            print("not updated")
+            version = version + " Not updated"
+    else:
+        print("server down")
+
+    
 with open("rooms.json", "r") as file:
     list_number_to_rooms = json.load(file)
     file.close()
@@ -332,8 +355,8 @@ def start_win_menu():
     button_winmenu_start = tk.Button(win_menu, image=picture_run_0, command=run_undertale, bg="black")
     button_winmenu_start.place(relx=0.5, rely=0.9, anchor="center")
     
-    label_version = tk.Label(win_menu, text="v1.0", bg="black", fg="white", font=("System", 15))
-    label_version.place(relx= 0.95, rely=0.95)
+    label_version = tk.Label(win_menu, text=version, bg="black", fg="white", font=("System", 15))
+    label_version.place(relx= 0.95, rely=0.95, anchor="e")
 
 
 
@@ -383,7 +406,7 @@ def start_win_menu():
             room = config.get("General", "Room").strip('"')
             room = room[:-7]
 
-            label_winmenu_save_save["text"] = list_number_to_rooms[room]
+            label_winmenu_save_save["text"] = list_number_to_rooms.get(room, "Location not found")
         else:      
             label_winmenu_save_name["fg"] = "red"
             label_winmenu_save_name["text"] = "Save Empty" 
@@ -490,7 +513,7 @@ def win_rename_version():
     global Entry_winrename_nameversion, win_rename_version
     print("start version rename win ")
     win_rename_version = tk.Toplevel(root)
-    win_rename_version.title(f"Rename version {combobox_winmenu_saveslist.get()}")
+    win_rename_version.title(f"Rename version {combobox_winmenu_versionslist.get()}")
     win_rename_version.geometry(f"400x250+{(screen_width // 2) - 200}+{(screen_height // 2) - 125}")
     win_rename_version.resizable(False, False)
 
