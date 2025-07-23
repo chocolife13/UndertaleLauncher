@@ -1,6 +1,5 @@
 <span style="font-family: 'Comic Sans MS';">Undertale Launcher - [WhatsApp channel](https://whatsapp.com/channel/0029Vb9tYfi7IUYTeusCq70D)
 
-
 Undertale Launcher is a launcher for the game Undertale that offers various useful features such as:
 
 **1.**   ﻿Management of different versions of Undertale.
@@ -14,18 +13,10 @@ Undertale Launcher is a launcher for the game Undertale that offers various usef
    ﻿   ﻿With this launcher, you can see your backup information such as the room, the run (neutral, pacifist, or genocide), and the LV.
    ﻿   ﻿You will see a window appear at the bottom right when you save.
 
-
-
 System Requirement :
-
 CPU : 600 Mhz
-
 RAM : 512 Mo
-
 GPU : 64 Mo with DirectX 9.0
-
-Disk : 1 500 Mo for one version
-
+Disk : 1 500 Mo for all version
 Windows 7 x86 (32 Bits) SP1
-
 Windows XP x86 (32-bit) requires installing [One Core API](https://github.com/shorthorn-project/One-Core-API-Binaries).
