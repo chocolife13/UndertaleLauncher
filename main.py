@@ -32,18 +32,38 @@ from pathlib import Path
 from tkinter import ttk
 import tkinter as tk
 import configparser
+import webbrowser
 import threading
+import traceback
 import requests
 import zipfile
 import shutil
 import json
+import sys
 import os
 
 print("Creation du prossesus root")
 root = tk.Tk()
+
+def error(exc_type, exc_value, exc_traceback):
+    message = ''.join(traceback.format_exception_only(exc_type, exc_value)).strip()
+    yes = messagebox.askyesno("An error has ocurred", f"{message}\n\n Do you want to feedback ?")
+    if yes:
+        url = "monday left me broken"
+        trace = ''.join(traceback.format_exception(exc_type, exc_value, exc_traceback)).strip()
+        data = {"content":f"```{trace}```"}
+        try:
+            requests.post(url, json=data)
+        except:
+            print("no conection")
+root.report_callback_exception = error
+sys.excepthook = error
+
+
+
 root.withdraw()
 ############### Variables d'initialisation ##########################
-version = "v1.1"
+version = "v1.2"
 var_winletter = os.environ.get("SystemDrive")
 var_launcher_path = os.getcwd()
 username = os.getlogin()
@@ -69,8 +89,12 @@ if wifi == 1:
         else:
 
             print("not updated")
+            
+            wantupdate = messagebox.askyesno("UndertaleLauncher is not up to date",f"Do you want to update ? \n{version} => {new_version}")
+            if wantupdate:
+                webbrowser.open("https://github.com/chocolife13/UndertaleLauncher/releases/latest")
             version = version + " Not updated"
-    else:
+    else:   
         print("server down")
 
     
@@ -90,6 +114,8 @@ picture_erase_0 = ImageTk.PhotoImage(Image.open("erase_button_0.png").resize((60
 picture_rename_0 = ImageTk.PhotoImage(Image.open("rename_button_0.png").resize((60,25)))
 
 picture_kill_0 = ImageTk.PhotoImage(Image.open("kill_button_0.png").resize((60,25)))
+
+picture_download_0 = ImageTk.PhotoImage(Image.open("download_button_0.png").resize((75,25)))
 
 
 ######################## Prossesus "root" ############################
@@ -470,20 +496,29 @@ def sound_play(path):
 
 def delete_version():
     global win_menu
-    print(f"la version {combobox_winmenu_versionslist.get()} va etre suprr")
-    print(os.path.join(var_launcher_path, "versions", combobox_winmenu_versionslist.get()))
-    choose = messagebox.askyesno("Are you sure ?", "Do you want to realy end now ?")
-    if choose:
-        shutil.rmtree(os.path.join(var_launcher_path, "versions", combobox_winmenu_versionslist.get()))
-    
+    if not os.path.exists(os.path.join(var_launcher_path, "versions", combobox_winmenu_versionslist.get())):
+         sound_play("sqek.wav")
+         messagebox.showinfo("U stupid","This version don't exist")
+         pass
+    else:
+        print(f"la version {combobox_winmenu_versionslist.get()} va etre suprr")
+        print(os.path.join(var_launcher_path, "versions", combobox_winmenu_versionslist.get()))
+        choose = messagebox.askyesno("Are you sure ?", "Do you want to realy end now ?")
+        if choose:
+            shutil.rmtree(os.path.join(var_launcher_path, "versions", combobox_winmenu_versionslist.get()))
 
 def delete_save():
     global win_menu
-    print(f"la save {combobox_winmenu_saveslist.get()} va etre suprr")
-    print(os.path.join(var_launcher_path, "saves", combobox_winmenu_saveslist.get()))
-    choose = messagebox.askyesno("Are you sure ?", "Do you want to really reset this timeline ? :)")
-    if choose:
-        shutil.rmtree(os.path.join(var_launcher_path, "saves", combobox_winmenu_saveslist.get()))
+    if not os.path.exists(os.path.join(var_launcher_path, "saves", combobox_winmenu_saveslist.get())):
+         sound_play("sqek.wav")
+         messagebox.showinfo("U stupid","This save don't exist")
+         pass
+    else:
+        print(f"la save {combobox_winmenu_saveslist.get()} va etre suprr")
+        print(os.path.join(var_launcher_path, "saves", combobox_winmenu_saveslist.get()))
+        choose = messagebox.askyesno("Are you sure ?", "Do you want to really reset this timeline ? :)")
+        if choose:
+            shutil.rmtree(os.path.join(var_launcher_path, "saves", combobox_winmenu_saveslist.get()))
     
 
 def rename_save():
@@ -520,12 +555,12 @@ def win_rename_version():
     frame_winrename = tk.Frame(win_rename_version, bg="black")
     frame_winrename.place(relx=0.5, rely=0.5, relwidth=1, relheight=1, height=-10, width=-10, anchor="center")
 
-    Label_winrename_title = tk.Label(win_rename_version, text="Rename", font=("System",20))
+    Label_winrename_title = tk.Label(win_rename_version, text="Rename",  bg="black", fg="white", font=("System",20))
     Label_winrename_title.pack(pady=10)
     Entry_winrename_nameversion = tk.Entry(win_rename_version)
     Entry_winrename_nameversion.pack()
 
-    button_winrename = tk.Button(win_rename_version, text="Rename", font=("System"), command= rename_version) 
+    button_winrename = tk.Button(win_rename_version, text="Rename", image=picture_rename_0, bg="black", font=("System"), command= rename_version) 
     button_winrename.pack(pady=10,side="bottom")
 
 def win_rename_save():
@@ -539,12 +574,12 @@ def win_rename_save():
     frame_winrename = tk.Frame(win_rename_save, bg="black")
     frame_winrename.place(relx=0.5, rely=0.5, relwidth=1, relheight=1, height=-10, width=-10, anchor="center")
 
-    Label_winrename_title = tk.Label(win_rename_save, text="Rename", font=("System",20))
+    Label_winrename_title = tk.Label(win_rename_save, text="Rename", bg="black", fg="white", font=("System",20))
     Label_winrename_title.pack(pady=10)
     Entry_winrename_namesave = tk.Entry(win_rename_save)
     Entry_winrename_namesave.pack()
 
-    button_winrename = tk.Button(win_rename_save, text="Rename", font=("System"), command= rename_save) 
+    button_winrename = tk.Button(win_rename_save, text="Rename",image=picture_rename_0, bg="black", font=("System"), command= rename_save) 
     button_winrename.pack(pady=10,side="bottom")
 
 
@@ -597,7 +632,7 @@ def new_version():
     combobox_win_newversion_versionchoice.set("v1.08")
 
     
-    button_win_newversion_continue = tk.Button(frame_win_newversion, text="Install", background="#ffbb00", foreground="black", font=("System",5), command= lambda: threading.Thread(target = start_win_download).start())
+    button_win_newversion_continue = tk.Button(frame_win_newversion, text="Install", image=picture_download_0, background="black    ", foreground="black", font=("System",5), command= lambda: threading.Thread(target = start_win_download).start())
     button_win_newversion_continue.pack(side="bottom", pady=10)
     
     sound_play(os.path.join(var_launcher_path, "new.wav"))
@@ -630,19 +665,23 @@ def new_save():
     
     
     win_newversion = tk.Toplevel(root)
-    win_newversion.title("New undertale save")
+    win_newversion.title("New save")
     win_newversion.geometry(f"400x250+{(screen_width // 2) - 200}+{(screen_height // 2) - 125}")
     win_newversion.resizable(False, False)
     
     
-    label_win_newversion_title = ttk.Label(win_newversion, text="New save", font=("System", 20))
+    frame_win_newversion = tk.Frame(win_newversion)
+    frame_win_newversion.place(rely=0.5, relx=0.5, relwidth=0.96, relheight=0.96, anchor="center")
+    frame_win_newversion.configure(background="#000000")
+
+    label_win_newversion_title = tk.Label(win_newversion, text="New save", bg="black", fg="white",font=("System", 20))
     label_win_newversion_title.pack()
     
-    label_win_newversion_nameversion = ttk.Label(win_newversion, text="name for the new save")
+    label_win_newversion_nameversion = tk.Label(win_newversion, text="name for the new save", bg="black", fg="white")
     label_win_newversion_nameversion.pack()
     
     
-    entry_win_newversion_nameversion = ttk.Entry(win_newversion, )
+    entry_win_newversion_nameversion = tk.Entry(win_newversion)
     entry_win_newversion_nameversion.pack()
     entry_win_newversion_nameversion.insert(0, "name")
     def toggle():
@@ -716,6 +755,11 @@ def start_win_download():
     win_download.geometry(f"500x100+{(screen_width // 2) - 250}+{(screen_height // 2) - 50}")
     win_download.resizable(False, False)
     win_download.title("Chargement 0%")
+    
+    frame_win_download = tk.Frame(win_download)
+    frame_win_download.place(rely=0.5, relx=0.5, relwidth=0.96, relheight=0.96, anchor="center")
+    frame_win_download.configure(background="#000000")
+   
     loading = ttk.Progressbar(win_download, orient="horizontal", length=300, mode="determinate")
     
     loading.pack(side="bottom", pady=20)
@@ -851,18 +895,16 @@ def run_undertale():
             
             
             
-    if os.path.isfile(os.path.join(save_appdata_local, "file0")):
-                
-        os.remove(os.path.join(save_appdata_local,"file0"))
-        os.remove(os.path.join(save_appdata_local,"undertale.ini"))
-        os.remove(os.path.join(save_appdata_local,"Undertale_Launcher.ini"))
-
-        print("copie de la save selectioner dans le LOCAL UNDERTALE")
-        shutil.copytree((os.path.join(Launcher_save_dirs, save_choiced)), save_appdata_local, dirs_exist_ok=True)
-    else:
     
-        shutil.copytree((os.path.join(Launcher_save_dirs, save_choiced)), save_appdata_local, dirs_exist_ok=True)
-        print("no save found to be deleted")
+                
+        
+    shutil.rmtree(os.path.join(save_appdata_local))
+    
+    os.makedirs(os.path.join(save_appdata_local))
+    print(save_appdata_local)
+    print("copie de la save selectioner dans le LOCAL UNDERTALE")
+    shutil.copytree((os.path.join(Launcher_save_dirs, save_choiced)), save_appdata_local, dirs_exist_ok=True)
+    
             
             
             
