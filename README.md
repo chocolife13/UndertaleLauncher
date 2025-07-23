@@ -14,9 +14,15 @@ Undertale Launcher is a launcher for the game Undertale that offers various usef
    ﻿   ﻿You will see a window appear at the bottom right when you save.
 
 System Requirement :
+
 CPU : 600 Mhz
+
 RAM : 512 Mo
+
 GPU : 64 Mo with DirectX 9.0
+
 Disk : 1 500 Mo for all version
+
 Windows 7 x86 (32 Bits) SP1
+
 Windows XP x86 (32-bit) requires installing [One Core API](https://github.com/shorthorn-project/One-Core-API-Binaries).
