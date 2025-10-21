@@ -33,16 +33,22 @@ from tkinter import ttk
 import tkinter as tk
 import configparser
 import webbrowser
+import subprocess
 import threading
 import traceback
 import requests
+import platform
 import zipfile
 import shutil
 import json
 import sys
 import os
 
+
+#------------------------------------------------
+os_platform = platform.system()
 print("Creation du prossesus root")
+
 root = tk.Tk()
 
 def error(exc_type, exc_value, exc_traceback):
@@ -64,12 +70,19 @@ sys.excepthook = error
 root.withdraw()
 ############### Variables d'initialisation ##########################
 version = "v1.2"
-var_winletter = os.environ.get("SystemDrive")
-var_launcher_path = os.getcwd()
 username = os.getlogin()
+var_launcher_path = os.getcwd()
 Launcher_save_dir = os.path.join(var_launcher_path, "saves")
 Launcher_version_dir = os.path.join(var_launcher_path, "versions")
-save_appdata_local = fr"{var_winletter}\Users\{username}\AppData\Local\UNDERTALE"
+
+
+if os_platform == "Windows":
+    var_winletter = os.environ.get("SystemDrive")
+    save_appdata_local = fr"{var_winletter}\Users\{username}\AppData\Local\UNDERTALE"
+
+elif os_platform == "Linux":
+    var_winletter = fr"/home/{username}/.wine/drive_c/"
+    save_appdata_local = fr"{var_winletter}/Users/{username}/AppData/Local/UNDERTALE"
 
 print("checking update..")
 try:
@@ -194,7 +207,7 @@ def start_win_menu():
     
     win_menu = tk.Toplevel(root)
     win_menu.protocol("WM_DELETE_WINDOW", quit_app)
-    win_menu.iconbitmap("icon.ico")
+    #win_menu.iconbitmap("icon.ico")
     win_menu.title("Undertale Launcher")
     win_menu.geometry(f"800x500+{(screen_width // 2) - 400}+{(screen_height // 2) - 250}")
     win_menu.resizable(False, False)
@@ -402,15 +415,21 @@ def start_win_menu():
         combobox_winmenu_versionslist["font"] = "System"
         
         
+        if os_platform == "Windows":
+            if "UNDERTALE.exe" in os.popen("tasklist").read():
+                button_winmenu_start["image"] = picture_kill_0
+                button_winmenu_start["command"] = lambda: os.system("taskkill /f /im UNDERTALE.exe")
+            else:
+                button_winmenu_start["image"] = picture_run_0
+                button_winmenu_start["command"] = run_undertale
         
-        if "UNDERTALE.exe" in os.popen("tasklist").read():
-            button_winmenu_start["image"] = picture_kill_0
-            button_winmenu_start["command"] = lambda: os.system("taskkill /f /im UNDERTALE.exe")
-            
-            
-        else:
-            button_winmenu_start["image"] = picture_run_0
-            button_winmenu_start["command"] = run_undertale
+        elif os_platform == "Linux":
+            if "UNDERTALE.exe" in os.popen("pstree").read():
+                button_winmenu_start["image"] = picture_kill_0
+                button_winmenu_start["command"] = lambda: os.system("pkill UNDERTALE.exe")
+            else:
+                button_winmenu_start["image"] = picture_run_0
+                button_winmenu_start["command"] = run_undertale
             
         
         if os.path.isfile(os.path.join(var_launcher_path, "saves", combobox_winmenu_saveslist.get() , "undertale.ini")):
@@ -632,7 +651,7 @@ def new_version():
     combobox_win_newversion_versionchoice.set("v1.08")
 
     
-    button_win_newversion_continue = tk.Button(frame_win_newversion, text="Install", image=picture_download_0, background="black    ", foreground="black", font=("System",5), command= lambda: threading.Thread(target = start_win_download).start())
+    button_win_newversion_continue = tk.Button(frame_win_newversion, text="Install", image=picture_download_0, background="black", foreground="black", font=("System",5), command= lambda: threading.Thread(target = start_win_download).start())
     button_win_newversion_continue.pack(side="bottom", pady=10)
     
     sound_play(os.path.join(var_launcher_path, "new.wav"))
@@ -912,9 +931,15 @@ def run_undertale():
             
 
            
+    if os_platform == "Windows":
+        os.startfile(os.path.join(var_launcher_path, "versions", combobox_winmenu_versionslist.get(), "UNDERTALE.exe"))
+    
+    elif os_platform == "Linux":
+        #os.system(fr"wine {os.path.join(var_launcher_path, "versions", combobox_winmenu_versionslist.get(), "UNDERTALE.exe")}")
+        subprocess.Popen(["wine", os.path.join(var_launcher_path, "versions", combobox_winmenu_versionslist.get(), "UNDERTALE.exe")])
+
             
-            
-    os.startfile(os.path.join(var_launcher_path, "versions", combobox_winmenu_versionslist.get(), "UNDERTALE.exe"))
+    
     sound_play(os.path.join(var_launcher_path, "start.wav")) 
 
 
