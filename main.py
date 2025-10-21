@@ -76,6 +76,7 @@ Launcher_save_dir = os.path.join(var_launcher_path, "saves")
 Launcher_version_dir = os.path.join(var_launcher_path, "versions")
 
 
+
 if os_platform == "Windows":
     var_winletter = os.environ.get("SystemDrive")
     save_appdata_local = fr"{var_winletter}\Users\{username}\AppData\Local\UNDERTALE"
