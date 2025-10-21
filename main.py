@@ -69,7 +69,7 @@ sys.excepthook = error
 
 root.withdraw()
 ############### Variables d'initialisation ##########################
-version = "v1.2.1 linux broken version"
+version = "v1.2.1"
 username = os.getlogin()
 var_launcher_path = os.getcwd()
 Launcher_save_dir = os.path.join(var_launcher_path, "saves")
