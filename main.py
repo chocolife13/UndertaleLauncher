@@ -44,7 +44,6 @@ import json
 import sys
 import os
 
-
 #------------------------------------------------
 os_platform = platform.system()
 print("Creation du prossesus root")
@@ -65,8 +64,6 @@ def error(exc_type, exc_value, exc_traceback):
 root.report_callback_exception = error
 sys.excepthook = error
 
-
-
 root.withdraw()
 ############### Variables d'initialisation ##########################
 version = "v1.2.1"
@@ -74,8 +71,6 @@ username = os.getlogin()
 var_launcher_path = os.getcwd()
 Launcher_save_dir = os.path.join(var_launcher_path, "saves")
 Launcher_version_dir = os.path.join(var_launcher_path, "versions")
-
-
 
 if os_platform == "Windows":
     var_winletter = os.environ.get("SystemDrive")
@@ -131,16 +126,11 @@ picture_kill_0 = ImageTk.PhotoImage(Image.open("kill_button_0.png").resize((60,2
 
 picture_download_0 = ImageTk.PhotoImage(Image.open("download_button_0.png").resize((75,25)))
 
-
 ######################## Prossesus "root" ############################
-
-
-
 
 # Obtenir la resolution
 screen_width = root.winfo_screenwidth()
 screen_height = root.winfo_screenheight()
-
 
 #Créer la fenetre de Chargement
 win_loading = tk.Toplevel(root)
@@ -153,7 +143,6 @@ win_loading.configure(bg="black")
 picture_loading = tk.PhotoImage(file = os.path.join(var_launcher_path, "loading.png")).subsample(4, 4)
 image_loading = tk.Label(win_loading, image= picture_loading)
 image_loading.pack()
-
 
 ###########################    Verification   ####################################
 def verification():
@@ -185,10 +174,8 @@ if os.path.isfile(os.path.join(save_appdata_local, "file0")):
 else:
     last_time_save = "none"
 
-
 verification()
 print("end of verification")
-
 
 ########################### Main windows ########################################
 win_menu = "Fenetre principale"
@@ -204,7 +191,6 @@ def start_win_menu():
     global combobox_winmenu_versionslist
     
     win_loading.destroy()
-   
     
     win_menu = tk.Toplevel(root)
     win_menu.protocol("WM_DELETE_WINDOW", quit_app)
@@ -235,8 +221,6 @@ def start_win_menu():
         )
     frame_winmenu_version.configure(background="#FFFFFF")
 
-
-
     frame_winmenu_version2 = tk.Frame(frame_winmenu_version)
     frame_winmenu_version2.place(
         relx=0.5,
@@ -246,10 +230,6 @@ def start_win_menu():
         anchor="center"
         )
     frame_winmenu_version2.configure(background="#000000")
-
-
-    
-
 
     #widjet version
     label_winmenu_title_save = tk.Label(
@@ -261,15 +241,9 @@ def start_win_menu():
         )
     label_winmenu_title_save.pack(pady=10)
 
-
     combobox_winmenu_versionslist = ttk.Combobox(frame_winmenu_version)
     combobox_winmenu_versionslist.pack(pady=10)
     combobox_winmenu_versionslist.set("Version")
-
-    
-    
-    
-
 
     button_winmenu_suprrversion = tk.Button(
         frame_winmenu_version,
@@ -278,26 +252,17 @@ def start_win_menu():
         command= delete_version,
         )
 
-    
-
     button_winmenu_suprrversion.place(
         relx=0.15,
         rely=0.9,
         anchor="center"
         )
     
-
-
     button_winmenu_renameversion = tk.Button(frame_winmenu_version, bg="black",image = picture_rename_0, command=win_rename_version)
     button_winmenu_renameversion.place(relx=0.38, rely=0.9, anchor="center")
     
     button_winmenu_newversion = tk.Button(frame_winmenu_version, bg="black", image= picture_new_0, command=new_version)
     button_winmenu_newversion.place(relx=0.62, rely=0.9, anchor="center")
-    
-    
-
-
-
 
     #frame save
     frame_winmenu_save = tk.Frame(win_menu)  
@@ -310,7 +275,6 @@ def start_win_menu():
         )
     frame_winmenu_save.configure(background="#FFFFFF")
     
-
     frame_winmenu_save2 = tk.Frame(frame_winmenu_save)  
     frame_winmenu_save2.place(
         relx=0.5,
@@ -321,10 +285,7 @@ def start_win_menu():
         )
 
     frame_winmenu_save2.configure(background="#000000")
-
     #widjets save
-    
-
     label_winmenu_title_save = tk.Label(
         frame_winmenu_save,
         text="Saves",
@@ -334,8 +295,6 @@ def start_win_menu():
         )
     label_winmenu_title_save.pack(pady=10)
 
-    
-    
     combobox_winmenu_saveslist = ttk.Combobox(frame_winmenu_save)
     combobox_winmenu_saveslist.pack(pady=10)
 
@@ -345,10 +304,6 @@ def start_win_menu():
         config_save = configparser.ConfigParser()
         config_save.read(os.path.join(save_appdata_local, "Undertale_Launcher.ini"))
         combobox_winmenu_saveslist.set(config_save.get("Info", "name"))
-        
-        
-        
-    
     
     button_winmenu_suprrsave = tk.Button(
         frame_winmenu_save,
@@ -357,15 +312,11 @@ def start_win_menu():
         command= delete_save,
         )
 
-    
-
     button_winmenu_suprrsave.place(
         relx=0.15,
         rely=0.9,
         anchor="center"
         )
-    
-
 
     button_winmenu_renamesave = tk.Button(frame_winmenu_save, bg="black",image = picture_rename_0, command=win_rename_save)
     button_winmenu_renamesave.place(relx=0.38, rely=0.9, anchor="center")
@@ -375,7 +326,6 @@ def start_win_menu():
     
     button_winmenu_save = tk.Button(frame_winmenu_save, image=picture_save_0, bg="black", command=save)
     button_winmenu_save.place(relx=0.85, rely=0.9, anchor="center")
-
 
     label_winmenu_save_save = tk.Label(frame_winmenu_save, text="", bg="black",fg="#ffffff", font=("System", 15))
     label_winmenu_save_save.pack()
@@ -388,19 +338,11 @@ def start_win_menu():
     label_winmenu_save_lv = tk.Label(frame_winmenu_save, text="", bg="black",fg="#ffffff", font=("System", 15))
     label_winmenu_save_lv.pack()
     
-    
-    
-    
-    
     button_winmenu_start = tk.Button(win_menu, image=picture_run_0, command=run_undertale, bg="black")
     button_winmenu_start.place(relx=0.5, rely=0.9, anchor="center")
     
     label_version = tk.Label(win_menu, text=version, bg="black", fg="white", font=("System", 15))
     label_version.place(relx= 0.95, rely=0.95, anchor="e")
-
-
-
-
 
 ################################### Update ######################################
     
@@ -414,7 +356,6 @@ def start_win_menu():
         
         combobox_winmenu_versionslist["values"] = list_winmenu_versions_installed
         combobox_winmenu_versionslist["font"] = "System"
-        
         
         if os_platform == "Windows":
             if "UNDERTALE.exe" in os.popen("tasklist").read():
@@ -431,13 +372,11 @@ def start_win_menu():
             else:
                 button_winmenu_start["image"] = picture_run_0
                 button_winmenu_start["command"] = run_undertale
-            
         
         if os.path.isfile(os.path.join(var_launcher_path, "saves", combobox_winmenu_saveslist.get() , "undertale.ini")):
             
             config = configparser.ConfigParser()
             config.read(os.path.join(var_launcher_path, "saves", combobox_winmenu_saveslist.get() , "undertale.ini"))
-            
             
             if float(config.get("General", "Love").strip('"')) == 1:
                 label_winmenu_route["text"] = "Pacifist"
@@ -483,15 +422,10 @@ def start_win_menu():
         
         combobox_winmenu_saveslist["values"] = list_winmenu_saves_installed      
         combobox_winmenu_saveslist["font"] = "System"
-       
         
         win_menu.after(700, main_update)
-        
 
     thread_update = threading.Thread(target=main_update, daemon=True)
-
-
-
     thread_update.start()
 
 ########################################################################### 
@@ -503,16 +437,12 @@ def quit_app():
 
     root.destroy()                                                                                                                                                  
     root.quit()
-    
   
 def sound_play(path):
-
     def play(p):
         playsound(p)
 
     threading.Thread(target=play, daemon=True, args=(path,)).start()
-    
-
 
 def delete_version():
     global win_menu
@@ -548,7 +478,6 @@ def rename_save():
     print("rename" + rename_path_old + "to" + rename_path_new)
     
     os.rename(rename_path_old, rename_path_new)
-
     
     config = configparser.ConfigParser()
     config.read(os.path.join(var_launcher_path, "saves", Entry_winrename_namesave.get(), "Undertale_Launcher.ini"))
@@ -601,14 +530,6 @@ def win_rename_save():
 
     button_winrename = tk.Button(win_rename_save, text="Rename",image=picture_rename_0, bg="black", font=("System"), command= rename_save) 
     button_winrename.pack(pady=10,side="bottom")
-
-
-
-
-
-
-
-
     
 win_newversion = "lol"
 
@@ -619,26 +540,20 @@ def new_version():
     global combobox_win_newversion_versionchoice
     global root
     
-    
-    
     win_newversion = tk.Toplevel(root)
     win_newversion.title("New version")
     win_newversion.geometry(f"400x250+{(screen_width // 2) - 200}+{(screen_height // 2) - 125}")
     win_newversion.resizable(False, False)
 
-
     frame_win_newversion = tk.Frame(win_newversion)
     frame_win_newversion.place(rely=0.5, relx=0.5, relwidth=0.96, relheight=0.96, anchor="center")
     frame_win_newversion.configure(background="#000000")
-    
-
 
     label_win_newversion_title = ttk.Label(frame_win_newversion, text="New version", font=("System", 20), background="black", foreground="white")
     label_win_newversion_title.pack()
     
     label_win_newversion_nameversion = ttk.Label(frame_win_newversion, text="Name of new version", font=("System", 10), background="black", foreground="white")
     label_win_newversion_nameversion.pack()
-    
     
     entry_win_newversion_nameversion = ttk.Entry(frame_win_newversion, font=("System"))
     entry_win_newversion_nameversion.pack()
@@ -650,29 +565,11 @@ def new_version():
     combobox_win_newversion_versionchoice = ttk.Combobox(frame_win_newversion, values=["v1.08","v1.06","v1.001","v1.00","201406TEST18","DEMO20130608","DEMO20130523"], font=("System"))
     combobox_win_newversion_versionchoice.pack()
     combobox_win_newversion_versionchoice.set("v1.08")
-
     
     button_win_newversion_continue = tk.Button(frame_win_newversion, text="Install", image=picture_download_0, background="black", foreground="black", font=("System",5), command= lambda: threading.Thread(target = start_win_download).start())
     button_win_newversion_continue.pack(side="bottom", pady=10)
     
     sound_play(os.path.join(var_launcher_path, "new.wav"))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 def new_save():
     global win_newversion
@@ -681,8 +578,6 @@ def new_save():
     global entry_win_newversion_nameversion
     global combobox_win_newversion_versionchoice
     global root
-    
-    
     
     win_newversion = tk.Toplevel(root)
     win_newversion.title("New save")
@@ -700,7 +595,6 @@ def new_save():
     label_win_newversion_nameversion = tk.Label(win_newversion, text="name for the new save", bg="black", fg="white")
     label_win_newversion_nameversion.pack()
     
-    
     entry_win_newversion_nameversion = tk.Entry(win_newversion)
     entry_win_newversion_nameversion.pack()
     entry_win_newversion_nameversion.insert(0, "name")
@@ -712,23 +606,13 @@ def new_save():
              label_win_newversion_versionchoic = 1
     var_toggle = tk.BooleanVar()
     
-    
-  
-    
     label_win_newversion_versionchoic = ttk.Checkbutton(win_newversion,variable=var_toggle ,text="importer actual save", command=lambda: toggle)
     label_win_newversion_versionchoic.pack()
-    
 
     def newing_save():
         global save_appdata_local
         
         config_save = configparser.ConfigParser()
-        
-        
-  
-        
-
-       
         
         config_save["Info"] = {
             "name": entry_win_newversion_nameversion.get()
@@ -751,25 +635,16 @@ def new_save():
     
     sound_play(os.path.join(var_launcher_path, "new.wav"))
 
-
-
-
-
-
-
-
 def start_win_download():
     global entry
     global entry_win_newversion_nameversion
     global combobox_win_newversion_versionchoice
     global win_menu
-    
 
     nom_de_version = entry_win_newversion_nameversion.get()
     version_selected = combobox_win_newversion_versionchoice.get()
     
     win_newversion.destroy()
-    
     
     win_download = tk.Toplevel()
     win_download.geometry(f"500x100+{(screen_width // 2) - 250}+{(screen_height // 2) - 50}")
@@ -786,14 +661,9 @@ def start_win_download():
 
     win_download.protocol("WM_DELETE_WINDOW", quit_app)
 
-
-
     url_download = f"https://github.com/chocolife13/----------------------------------/releases/download/{version_selected}/file.zip"
     undertale_chunk_downloaded = 0
     request_undertale_download = requests.get(url_download, stream=True)
-
-
-    
 
     if request_undertale_download.status_code == 200:
         print("Server disponible et fichier trouvé")
@@ -818,49 +688,29 @@ def start_win_download():
             ziping_path = os.path.join(var_launcher_path, "versions")
             with zipfile.ZipFile(zip_path, "r") as zip_file:
                 zip_file.extractall(ziping_path)
-            
-            
             print("Fini")
             win_download.destroy()
             
             os.rename(os.path.join(var_launcher_path, "versions", version_selected), os.path.join(var_launcher_path, "versions", nom_de_version ))
-            
-            
             main_update()
-            
-            
-            
     else: 
         print("serveur down")
         win_download.destroy()
-
-
 
 def save():
     Launcher_save_dirs = os.path.join(var_launcher_path, "saves")
     
     print("saving..")
             
-
     print(f"Dossier LOCAL UNDERTALE: {save_appdata_local}")
     print(f"les Save du Launcher se trouve a {Launcher_save_dirs}")
-    
-            
             
     config_save = configparser.ConfigParser()
-            
-            
     print(f"recherche du nom de la save dans le fichier Undertale_Launcher.ini")
-    
     
     if os.path.exists(os.path.join(save_appdata_local, "Undertale_Launcher.ini")):
                 
         config_save.read(os.path.join(save_appdata_local, "Undertale_Launcher.ini"))
-            
-        #print(f"Fichier .ini ouvert :{os.path.join(save_appdata_local, "Undertale_Launcher.ini")}")
-            
-            
-            
         nom_save_ini_local = config_save.get("Info", "name")
         print(f"sauvegarde la save de LOCAL UNDERTALE au Laucher")
                 
@@ -880,48 +730,19 @@ def save():
         shutil.copytree(save_appdata_local, os.path.join(Launcher_save_dirs, nom_save_ini_local), dirs_exist_ok=True)
                 
         print(f"sauvegarde dans LOCAL UNDERTALE ({nom_save_ini_local})")
-            
-    
-    
-    
-    
-    
     else:
         print(f"Fichier .ini pas ouvert :{os.path.join(save_appdata_local, 'Undertale_Launcher.ini')}")
             
-            
-            
-            
-           
-
-
-
-
-
-
 def run_undertale():
-    
-            
     ########## Gestion des sauvegardes ###################
             
     Launcher_save_dirs = os.path.join(var_launcher_path, "saves")
     
     save_choiced = combobox_winmenu_saveslist.get()
-            
 
     print(f"Dossier LOCAL UNDERTALE: {save_appdata_local}")
     print(f"les Save du Launcher se trouve a {Launcher_save_dirs}")
     print(f"jeux lancer sur la save ({save_choiced})")
-            
-            
-            
-    
-                
-        
-    
-    
-            
-            
             
     if os_platform == "Windows":
         shutil.rmtree(os.path.join(save_appdata_local))
@@ -931,12 +752,7 @@ def run_undertale():
         print("copie de la save selectioner dans le LOCAL UNDERTALE")
         shutil.copytree((os.path.join(Launcher_save_dirs, save_choiced)), save_appdata_local, dirs_exist_ok=True)
 
-
-
-
-        
         os.startfile(os.path.join(var_launcher_path, "versions", combobox_winmenu_versionslist.get(), "UNDERTALE.exe"))
-    
     elif os_platform == "Linux":
         print(save_appdata_local)
         os.system(f"rm  -rf {os.path.join(save_appdata_local)}")
@@ -945,19 +761,9 @@ def run_undertale():
         #os.system(fr"wine {os.path.join(var_launcher_path, "versions", combobox_winmenu_versionslist.get(), "UNDERTALE.exe")}")
         subprocess.Popen(["wine", os.path.join(var_launcher_path, "versions", combobox_winmenu_versionslist.get(), "UNDERTALE.exe")])
 
-            
-    
     sound_play(os.path.join(var_launcher_path, "start.wav")) 
-
-
-  
-
-        
-
-
 
 # Attente pour le loading screen
 win_loading.after(0, start_win_menu)
-
 
 root.mainloop()
