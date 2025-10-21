@@ -55,7 +55,7 @@ def error(exc_type, exc_value, exc_traceback):
     message = ''.join(traceback.format_exception_only(exc_type, exc_value)).strip()
     yes = messagebox.askyesno("An error has ocurred", f"{message}\n\n Do you want to feedback ?")
     if yes:
-        url = "monday left me broken"
+        url = "-_- (frisk face btw)"
         trace = ''.join(traceback.format_exception(exc_type, exc_value, exc_traceback)).strip()
         data = {"content":f"```{trace}```"}
         try:
@@ -69,7 +69,7 @@ sys.excepthook = error
 
 root.withdraw()
 ############### Variables d'initialisation ##########################
-version = "v1.2 linux broken version"
+version = "v1.2.1 linux broken version"
 username = os.getlogin()
 var_launcher_path = os.getcwd()
 Launcher_save_dir = os.path.join(var_launcher_path, "saves")
@@ -82,14 +82,14 @@ if os_platform == "Windows":
 
 elif os_platform == "Linux":
     var_winletter = fr"/home/{username}/.wine/drive_c/"
-    save_appdata_local = fr"{var_winletter}/Users/{username}/AppData/Local/UNDERTALE"
+    save_appdata_local = fr"{var_winletter}/users/{username}/AppData/Local/UNDERTALE/"
 
 print("checking update..")
 try:
     update_request = requests.get("https://api.github.com/repos/chocolife13/UndertaleLauncher/tags")
     wifi = 1
 except:
-    print("have u tested internet yet ?")
+    print("have u tested the internet yet ?")
     wifi = 0
 
 if wifi == 1:
@@ -917,24 +917,30 @@ def run_undertale():
     
                 
         
-    shutil.rmtree(os.path.join(save_appdata_local))
     
-    os.makedirs(os.path.join(save_appdata_local))
-    print(save_appdata_local)
-    print("copie de la save selectioner dans le LOCAL UNDERTALE")
-    shutil.copytree((os.path.join(Launcher_save_dirs, save_choiced)), save_appdata_local, dirs_exist_ok=True)
     
             
             
             
-            
-            
-
-           
     if os_platform == "Windows":
+        shutil.rmtree(os.path.join(save_appdata_local))
+    
+        os.makedirs(os.path.join(save_appdata_local))
+        print(save_appdata_local)
+        print("copie de la save selectioner dans le LOCAL UNDERTALE")
+        shutil.copytree((os.path.join(Launcher_save_dirs, save_choiced)), save_appdata_local, dirs_exist_ok=True)
+
+
+
+
+        
         os.startfile(os.path.join(var_launcher_path, "versions", combobox_winmenu_versionslist.get(), "UNDERTALE.exe"))
     
     elif os_platform == "Linux":
+        print(save_appdata_local)
+        os.system(f"rm  -rf {os.path.join(save_appdata_local)}")
+        os.system(f"mkdir {os.path.join(save_appdata_local)}")
+        shutil.copytree((os.path.join(Launcher_save_dirs, save_choiced)), save_appdata_local, dirs_exist_ok=True)
         #os.system(fr"wine {os.path.join(var_launcher_path, "versions", combobox_winmenu_versionslist.get(), "UNDERTALE.exe")}")
         subprocess.Popen(["wine", os.path.join(var_launcher_path, "versions", combobox_winmenu_versionslist.get(), "UNDERTALE.exe")])
 
