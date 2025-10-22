@@ -116,6 +116,8 @@ picture_kill_0 = ImageTk.PhotoImage(Image.open("kill_button_0.png").resize((60,2
 
 picture_download_0 = ImageTk.PhotoImage(Image.open("download_button_0.png").resize((75,25)))
 
+picture_settings_0 = ImageTk.PhotoImage(Image.open("info.png").resize((25,25)))
+
 ######################## Prossesus "root" ############################
 
 # Obtenir la resolution
@@ -328,6 +330,10 @@ def start_win_menu():
     label_winmenu_save_lv = tk.Label(frame_winmenu_save, text="", bg="black",fg="#ffffff", font=("System", 15))
     label_winmenu_save_lv.pack()
     
+    
+    button_winmenu_settings = tk.Button(win_menu, image=picture_settings_0, command=start_win_settings, bg="black")
+    button_winmenu_settings.place(relx=0.03, rely=0.9, anchor="center")
+    
     button_winmenu_start = tk.Button(win_menu, image=picture_run_0, command=run_undertale, bg="black")
     button_winmenu_start.place(relx=0.5, rely=0.9, anchor="center")
     
@@ -419,7 +425,23 @@ def start_win_menu():
     thread_update.start()
 
 ########################################################################### 
+def start_win_settings():
+    print("settings")
+    win_rename_version = tk.Toplevel(root)
+    win_rename_version.title(f"Settings")
+    win_rename_version.geometry(f"400x250+{(screen_width // 2) - 200}+{(screen_height // 2) - 125}")
+    win_rename_version.resizable(False, False)
 
+    frame_winrename = tk.Frame(win_rename_version, bg="black")
+    frame_winrename.place(relx=0.5, rely=0.5, relwidth=1, relheight=1, height=-10, width=-10, anchor="center")
+
+    Label_winrename_title = tk.Label(win_rename_version, text="Settings",  bg="black", fg="white", font=("System",20))
+    Label_winrename_title.pack(pady=10)
+
+    Label_winrename_title = tk.Label(win_rename_version, text="Coming soon...",  bg="black", fg="white", font=("System",20))
+    Label_winrename_title.pack(pady=10)
+
+    
 
 def quit_app():
     global root
@@ -735,6 +757,7 @@ def run_undertale():
     print(f"jeux lancer sur la save ({save_choiced})")
             
     if not os.path.exists(os.path.join(Launcher_save_dirs, save_choiced)) or not os.path.exists(os.path.join(var_launcher_path, "versions", combobox_winmenu_versionslist.get(), "UNDERTALE.exe")):
+        sound_play(os.path.join(var_launcher_path, "sqek.wav"))
         if not os.path.exists(os.path.join(var_launcher_path, "versions", combobox_winmenu_versionslist.get(), "UNDERTALE.exe")):
             messagebox.showinfo("U stupid", "U tried an unexsitant version bro")     
         elif not os.path.exists(os.path.join(Launcher_save_dirs, save_choiced)):
@@ -757,8 +780,8 @@ def run_undertale():
             shutil.copytree((os.path.join(Launcher_save_dirs, save_choiced)), save_appdata_local, dirs_exist_ok=True)
             #os.system(fr"wine {os.path.join(var_launcher_path, "versions", combobox_winmenu_versionslist.get(), "UNDERTALE.exe")}")
             subprocess.Popen(["wine", os.path.join(var_launcher_path, "versions", combobox_winmenu_versionslist.get(), "UNDERTALE.exe")])
-
-        sound_play(os.path.join(var_launcher_path, "start.wav")) 
+        sound_play(os.path.join(var_launcher_path, "start.wav"))
+         
 # Attente pour le loading screen
 win_loading.after(0, start_win_menu)
 
