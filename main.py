@@ -7,21 +7,11 @@
 #                      ---Task---
 # 
 # TODO:
-#  - Steam version
+#  - Import version
 #  - all lang
-#   
-# 
-# DOING: 
-#  -Battle button
-#
+#  - mod
 # 
 # 
-# DONE :
-#  
-#  
-#
-#
-#
 # ----------------------------------------------
 ############ Importation des librairies nécessaires ##################
 
