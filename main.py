@@ -734,25 +734,31 @@ def run_undertale():
     print(f"les Save du Launcher se trouve a {Launcher_save_dirs}")
     print(f"jeux lancer sur la save ({save_choiced})")
             
-    if os_platform == "Windows":
-        shutil.rmtree(os.path.join(save_appdata_local))
+    if not os.path.exists(os.path.join(Launcher_save_dirs, save_choiced)) or not os.path.exists(os.path.join(var_launcher_path, "versions", combobox_winmenu_versionslist.get(), "UNDERTALE.exe")):
+        if not os.path.exists(os.path.join(var_launcher_path, "versions", combobox_winmenu_versionslist.get(), "UNDERTALE.exe")):
+            messagebox.showinfo("U stupid", "U tried an unexsitant version bro")     
+        elif not os.path.exists(os.path.join(Launcher_save_dirs, save_choiced)):
+            messagebox.showinfo("U stupid", "U tried an unexsitant save bro")
+       
+    else:
+        if os_platform == "Windows":
+            shutil.rmtree(os.path.join(save_appdata_local))
     
-        os.makedirs(os.path.join(save_appdata_local))
-        print(save_appdata_local)
-        print("copie de la save selectioner dans le LOCAL UNDERTALE")
-        shutil.copytree((os.path.join(Launcher_save_dirs, save_choiced)), save_appdata_local, dirs_exist_ok=True)
+            os.makedirs(os.path.join(save_appdata_local))
+            print(save_appdata_local)
+            print("copie de la save selectioner dans le LOCAL UNDERTALE")
+            shutil.copytree((os.path.join(Launcher_save_dirs, save_choiced)), save_appdata_local, dirs_exist_ok=True)
 
-        os.startfile(os.path.join(var_launcher_path, "versions", combobox_winmenu_versionslist.get(), "UNDERTALE.exe"))
-    elif os_platform == "Linux":
-        print(save_appdata_local)
-        os.system(f"rm  -rf {os.path.join(save_appdata_local)}")
-        os.system(f"mkdir {os.path.join(save_appdata_local)}")
-        shutil.copytree((os.path.join(Launcher_save_dirs, save_choiced)), save_appdata_local, dirs_exist_ok=True)
-        #os.system(fr"wine {os.path.join(var_launcher_path, "versions", combobox_winmenu_versionslist.get(), "UNDERTALE.exe")}")
-        subprocess.Popen(["wine", os.path.join(var_launcher_path, "versions", combobox_winmenu_versionslist.get(), "UNDERTALE.exe")])
+            os.startfile(os.path.join(var_launcher_path, "versions", combobox_winmenu_versionslist.get(), "UNDERTALE.exe"))
+        elif os_platform == "Linux":
+            print(save_appdata_local)
+            os.system(f"rm  -rf {os.path.join(save_appdata_local)}")
+            os.system(f"mkdir {os.path.join(save_appdata_local)}")
+            shutil.copytree((os.path.join(Launcher_save_dirs, save_choiced)), save_appdata_local, dirs_exist_ok=True)
+            #os.system(fr"wine {os.path.join(var_launcher_path, "versions", combobox_winmenu_versionslist.get(), "UNDERTALE.exe")}")
+            subprocess.Popen(["wine", os.path.join(var_launcher_path, "versions", combobox_winmenu_versionslist.get(), "UNDERTALE.exe")])
 
-    sound_play(os.path.join(var_launcher_path, "start.wav")) 
-
+        sound_play(os.path.join(var_launcher_path, "start.wav")) 
 # Attente pour le loading screen
 win_loading.after(0, start_win_menu)
 
