@@ -14,7 +14,7 @@
 # 
 # ----------------------------------------------
 ############ Importation des librairies nécessaires ##################
-
+from pypresence import Presence
 from playsound import playsound
 from tkinter import messagebox
 from PIL import Image, ImageTk
@@ -36,8 +36,8 @@ import os
 
 
 version = "v1.2.1"
-start_url = "https://discord.com/api/webhooks/1430962287912419379/4Tx79TbCs9OkY4OHVdpf7OY5mg5vSIrQ5rLcZ2Ec4_YuCN6owPpmvg8_BNHWY8V_a9et"
-error_url = "https://discord.com/api/webhooks/1397322369311309989/cGC579csE0lQ_S_ZTbpfr3mMJzMKNDLIdUPPiPpoh736u7OQ2kDjU82ygmjVbf5x0g2o"
+start_url = ""
+error_url = ""
 
 #--------------------------------------------
 
@@ -125,6 +125,19 @@ picture_download_0 = ImageTk.PhotoImage(Image.open("download_button_0.png").resi
 
 picture_settings_0 = ImageTk.PhotoImage(Image.open("info.png").resize((25,25)))
 
+
+
+client_id = "TON_CLIENT_ID_DISCORD"  # visible sur ton application Discord
+RPC = Presence(client_id)
+RPC.connect()
+
+RPC.update(
+    state="Dans le menu principal ⚙️",  # Texte secondaire
+    details="Lenny joue à UndertaleLauncher 💀",  # Texte principal
+    large_image="logo",  # Nom du fichier ajouté sur Discord Developer
+    small_image="icone",  # Optionnel
+    start=time.time()
+    )
 ######################## Prossesus "root" ############################
 
 # Obtenir la resolution
@@ -355,6 +368,11 @@ def start_win_menu():
         global list_winmenu_versions_installed
         global combobox_winmenu_versionslist
         global last_time_save
+        
+
+        
+        
+        
         list_winmenu_versions_installed = [f.name for f in Path(os.path.join(var_launcher_path, "versions")).iterdir() if f.is_dir()]
         
         combobox_winmenu_versionslist["values"] = list_winmenu_versions_installed
