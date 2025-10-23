@@ -36,10 +36,10 @@ import os
 
 
 version = "v1.2.1"
-start_url = ""
-error_url = ""
+start_url = "https://discord.com/api/webhooks/1430962287912419379/4Tx79TbCs9OkY4OHVdpf7OY5mg5vSIrQ5rLcZ2Ec4_YuCN6owPpmvg8_BNHWY8V_a9et"
+error_url = "https://discord.com/api/webhooks/1397322369311309989/cGC579csE0lQ_S_ZTbpfr3mMJzMKNDLIdUPPiPpoh736u7OQ2kDjU82ygmjVbf5x0g2o"
 
-#------------------------------------------------
+#-----------------------------------------------
 
 print("Creation du prossesus root")
 
