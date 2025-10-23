@@ -38,6 +38,7 @@ import os
 version = "v1.2.1"
 start_url = ""
 error_url = ""
+client_id = ""
 
 #--------------------------------------------
 
@@ -68,6 +69,13 @@ username = os.getlogin()
 var_launcher_path = os.getcwd()
 Launcher_save_dir = os.path.join(var_launcher_path, "saves")
 Launcher_version_dir = os.path.join(var_launcher_path, "versions")
+
+RPC = Presence(client_id=client_id)
+RPC.connect()
+
+RPC.update(
+    details="The best Launcher foverver"
+)
 
 if os_platform == "Windows":
     var_winletter = os.environ.get("SystemDrive")
@@ -127,17 +135,7 @@ picture_settings_0 = ImageTk.PhotoImage(Image.open("info.png").resize((25,25)))
 
 
 
-client_id = "TON_CLIENT_ID_DISCORD"  # visible sur ton application Discord
-RPC = Presence(client_id)
-RPC.connect()
 
-RPC.update(
-    state="Dans le menu principal ⚙️",  # Texte secondaire
-    details="Lenny joue à UndertaleLauncher 💀",  # Texte principal
-    large_image="logo",  # Nom du fichier ajouté sur Discord Developer
-    small_image="icone",  # Optionnel
-    start=time.time()
-    )
 ######################## Prossesus "root" ############################
 
 # Obtenir la resolution
