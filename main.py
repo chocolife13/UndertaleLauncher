@@ -34,29 +34,36 @@ import json
 import sys
 import os
 
+
+version = "v1.2.1"
+start_url = ""
+error_url = ""
+
 #------------------------------------------------
-os_platform = platform.system()
+
 print("Creation du prossesus root")
 
 root = tk.Tk()
 
 def error(exc_type, exc_value, exc_traceback):
     message = ''.join(traceback.format_exception_only(exc_type, exc_value)).strip()
-    yes = messagebox.askyesno("An error has ocurred", f"{message}\n\n Do you want to feedback ?")
+    yes = messagebox.askyesno("An error has ocurred", f"{message}\n\n Do you want to seen this error in the discord server ?")
     if yes:
-        url = "-_- (frisk face btw)"
+        
         trace = ''.join(traceback.format_exception(exc_type, exc_value, exc_traceback)).strip()
         data = {"content":f"```{trace}```"}
         try:
-            requests.post(url, json=data)
+            requests.post(error_url, json=data)
         except:
             print("no conection")
 root.report_callback_exception = error
 sys.excepthook = error
 
+
 root.withdraw()
 ############### Variables d'initialisation ##########################
-version = "v1.2.1"
+
+os_platform = platform.system()
 username = os.getlogin()
 var_launcher_path = os.getcwd()
 Launcher_save_dir = os.path.join(var_launcher_path, "saves")
@@ -784,5 +791,7 @@ def run_undertale():
          
 # Attente pour le loading screen
 win_loading.after(0, start_win_menu)
+data = {"content": fr"A {platform.platform()} user started undertale launcher !"}
+requests.post(start_url, json=data)
 
 root.mainloop()
