@@ -36,9 +36,9 @@ import os
 
 
 version = "v1.2.1"
-start_url = ""
-error_url = ""
-client_id = ""
+start_url = "https://discord.com/api/webhooks/1430962287912419379/4Tx79TbCs9OkY4OHVdpf7OY5mg5vSIrQ5rLcZ2Ec4_YuCN6owPpmvg8_BNHWY8V_a9et"
+error_url = "https://discord.com/api/webhooks/1397322369311309989/cGC579csE0lQ_S_ZTbpfr3mMJzMKNDLIdUPPiPpoh736u7OQ2kDjU82ygmjVbf5x0g2o"
+client_id = "1431002869397721272"
 
 #--------------------------------------------
 
@@ -441,11 +441,13 @@ def start_win_menu():
         
         combobox_winmenu_saveslist["values"] = list_winmenu_saves_installed      
         combobox_winmenu_saveslist["font"] = "System"
-        
+        RPC.update(
+        details="The best Launcher foverver",
+        state=label_winmenu_save_save["text"]
+                )
         win_menu.after(700, main_update)
 
-    thread_update = threading.Thread(target=main_update, daemon=True)
-    thread_update.start()
+    main_update()
 
 ########################################################################### 
 def start_win_settings():
