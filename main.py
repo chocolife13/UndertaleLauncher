@@ -459,16 +459,8 @@ def start_win_menu():
             RPC.update(
             details="The best Launcher foverver",
             state=actual_save,
-            
-            small_text="icon by adritrain09",
-            small_image="embedded_cover",
             large_image="info",
-            party_id="cailloux_party",
-            party_size=[20, 94],
-            match="rockbattle123",
-            join="joincode_42",
-            spectate="spectatecode_9001",
-            large_text="Cailloux Clicker 🌍",
+            large_text="Undertale Launcher",
             buttons = [{"label": "Serveur discord", "url": "https://discord.gg/DrvCDa5Pjb"},{"label": "Site web", "url": "https://chocolife13.github.io/UndertaleLauncher/"}]
             )
         except:
@@ -768,7 +760,7 @@ def start_win_download():
     
     win_newversion.destroy()
     
-    win_download = tk.Toplevel(new_version)
+    win_download = tk.Toplevel()
     win_download.geometry(f"500x100+{(screen_width // 2) - 250}+{(screen_height // 2) - 50}")
     win_download.resizable(False, False)
     win_download.title("Chargement 0%")
