@@ -17,6 +17,7 @@
 from pypresence import Presence
 from playsound import playsound
 from tkinter import messagebox
+from tkinter import filedialog
 from PIL import Image, ImageTk
 from pathlib import Path
 from tkinter import ttk
@@ -129,6 +130,10 @@ picture_new_0 = ImageTk.PhotoImage(Image.open("new_button_0.png").resize((60,25)
 picture_delete_0 = ImageTk.PhotoImage(Image.open("delete_button_0.png").resize((60,25)))
 
 picture_erase_0 = ImageTk.PhotoImage(Image.open("erase_button_0.png").resize((60,25)))
+
+picture_mods_0 = ImageTk.PhotoImage(Image.open("mods_button_0.png").resize((75,25)))
+
+picture_upload_0 = ImageTk.PhotoImage(Image.open("upload_button_0.png").resize((75,25)))
 
 picture_rename_0 = ImageTk.PhotoImage(Image.open("rename_button_0.png").resize((60,25)))
 
@@ -496,7 +501,12 @@ def start_win_settings():
 def quit_app():
     global root
     print("Fermeture en cours..")
-
+    try:
+        RPC.close()
+    except:
+        print("no discord rpc to quit")
+    finally:
+        pass
     root.destroy()                                                                                                                                                  
     root.quit()
   
@@ -629,9 +639,19 @@ def new_version():
     combobox_win_newversion_versionchoice.set("v1.08")
     
     button_win_newversion_continue = tk.Button(frame_win_newversion, text="Install", image=picture_download_0, background="black", foreground="black", font=("System",5), command= lambda: threading.Thread(target = start_win_download).start())
-    button_win_newversion_continue.pack(side="bottom", pady=10)
+    button_win_newversion_continue.place(relx=0.5, rely=0.9, anchor="center")
+
+    button_win_newversion_continue = tk.Button(frame_win_newversion, text="Install", image=picture_upload_0, background="black", foreground="black", font=("System",5), command= lambda: threading.Thread(target = upload_version).start())
+    button_win_newversion_continue.place(relx=0.2, rely=0.9, anchor="center")
+
+    button_win_newversion_continue = tk.Button(frame_win_newversion, text="Install", image=picture_mods_0, background="black", foreground="black", font=("System",5), command= lambda: sound_play(os.path.join(var_launcher_path, "sqek.wav")))
+    button_win_newversion_continue.place(relx=0.8, rely=0.9, anchor="center")
     
     sound_play(os.path.join(var_launcher_path, "new.wav"))
+
+
+
+
 
 def new_save():
     global win_newversion
@@ -697,6 +717,46 @@ def new_save():
     
     sound_play(os.path.join(var_launcher_path, "new.wav"))
 
+def upload_version():
+    upload_folder = Path(filedialog.askdirectory(title="Choice a version with a UNDERTALE.exe in"))
+    
+    
+    win_download = tk.Toplevel()
+    win_download.geometry(f"500x100+{(screen_width // 2) - 250}+{(screen_height // 2) - 50}")
+    win_download.resizable(False, False)
+    win_download.title("Chargement 0%")
+    frame_win_download = tk.Frame(win_download)
+    frame_win_download.place(rely=0.5, relx=0.5, relwidth=0.96, relheight=0.96, anchor="center")
+    frame_win_download.configure(background="#000000")
+    loading = ttk.Progressbar(win_download, orient="horizontal", length=300, mode="determinate")
+    loading.pack(side="bottom", pady=20)
+    win_download.protocol("WM_DELETE_WINDOW", quit_app)
+
+    dir_upload_to = os.path.join(Launcher_version_dir,  upload_folder.name) + "/"
+    Path(dir_upload_to).mkdir(parents=True, exist_ok=True)
+    print(dir_upload_to)
+    number_of_all_files = len(list(upload_folder.iterdir()))
+    i = 0
+    fichiers = list(upload_folder.rglob("*"))  # compter tous les fichiers récursivement
+    number_of_all_files = len([f for f in fichiers if f.is_file()])
+
+    for racine, dossiers, fichiers in os.walk(str(upload_folder)):
+        for fichier in fichiers:
+            src = os.path.join(racine, fichier)
+            rel_path = os.path.relpath(src, str(upload_folder))
+            dest = os.path.join(dir_upload_to, rel_path)
+            os.makedirs(os.path.dirname(dest), exist_ok=True)
+
+            shutil.copy2(src, dest)
+
+            i += 1
+            progress = int(i / number_of_all_files * 100)
+            loading['value'] = progress
+            win_download.title(f"Copie de {fichier} {i / number_of_all_files * 100:.1f}%")
+            win_download.update_idletasks()
+            win_menu.update_idletasks()
+    win_download.destroy()
+
 def start_win_download():
     global entry
     global entry_win_newversion_nameversion
@@ -708,7 +768,7 @@ def start_win_download():
     
     win_newversion.destroy()
     
-    win_download = tk.Toplevel()
+    win_download = tk.Toplevel(new_version)
     win_download.geometry(f"500x100+{(screen_width // 2) - 250}+{(screen_height // 2) - 50}")
     win_download.resizable(False, False)
     win_download.title("Chargement 0%")
@@ -722,7 +782,7 @@ def start_win_download():
     loading.pack(side="bottom", pady=20)
 
     win_download.protocol("WM_DELETE_WINDOW", quit_app)
-
+    win_download.lift() 
     url_download = f"https://github.com/chocolife13/----------------------------------/releases/download/{version_selected}/file.zip"
     undertale_chunk_downloaded = 0
     request_undertale_download = requests.get(url_download, stream=True)
@@ -809,7 +869,11 @@ def run_undertale():
     if not os.path.exists(os.path.join(Launcher_save_dirs, save_choiced)) or not os.path.exists(os.path.join(var_launcher_path, "versions", combobox_winmenu_versionslist.get(), "UNDERTALE.exe")):
         sound_play(os.path.join(var_launcher_path, "sqek.wav"))
         if not os.path.exists(os.path.join(var_launcher_path, "versions", combobox_winmenu_versionslist.get(), "UNDERTALE.exe")):
-            messagebox.showinfo("U stupid", "U tried an unexsitant version bro")     
+            if os.path.exists(os.path.join(var_launcher_path, "versions", combobox_winmenu_versionslist.get())):
+                messagebox.showinfo("Bruh", "Ur version is broken")
+            else:
+                messagebox.showinfo("U stupid", "U tried an unexsitant version bro")  
+              
         elif not os.path.exists(os.path.join(Launcher_save_dirs, save_choiced)):
             messagebox.showinfo("U stupid", "U tried an unexsitant save bro")
        
