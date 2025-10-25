@@ -70,13 +70,6 @@ var_launcher_path = os.getcwd()
 Launcher_save_dir = os.path.join(var_launcher_path, "saves")
 Launcher_version_dir = os.path.join(var_launcher_path, "versions")
 
-RPC = Presence(client_id=client_id)
-RPC.connect()
-
-RPC.update(
-    details="The best Launcher foverver"
-)
-
 if os_platform == "Windows":
     var_winletter = os.environ.get("SystemDrive")
     save_appdata_local = fr"{var_winletter}\Users\{username}\AppData\Local\UNDERTALE"
@@ -110,8 +103,20 @@ if wifi == 1:
             version = version + " Not updated"
     else:   
         print("server down")
+########### Rich presence discord ###############
+try:
+    RPC = Presence(client_id=client_id)
+    RPC.connect()
 
-    
+    RPC.update(
+        details="Loading"
+    )
+    print("connected with discord")
+except:
+    print("discord not found")
+finally:
+    pass
+#############   files loading  ####################
 with open("rooms.json", "r") as file:
     list_number_to_rooms = json.load(file)
     file.close()
@@ -133,7 +138,7 @@ picture_download_0 = ImageTk.PhotoImage(Image.open("download_button_0.png").resi
 
 picture_settings_0 = ImageTk.PhotoImage(Image.open("info.png").resize((25,25)))
 
-
+icon = tk.PhotoImage(file="icon.png")
 
 
 ######################## Prossesus "root" ############################
@@ -204,7 +209,7 @@ def start_win_menu():
     
     win_menu = tk.Toplevel(root)
     win_menu.protocol("WM_DELETE_WINDOW", quit_app)
-    #win_menu.iconbitmap("icon.ico")
+    win_menu.iconphoto(True, icon)
     win_menu.title("Undertale Launcher")
     win_menu.geometry(f"800x500+{(screen_width // 2) - 400}+{(screen_height // 2) - 250}")
     win_menu.resizable(False, False)
@@ -441,10 +446,30 @@ def start_win_menu():
         
         combobox_winmenu_saveslist["values"] = list_winmenu_saves_installed      
         combobox_winmenu_saveslist["font"] = "System"
-        RPC.update(
-        details="The best Launcher foverver",
-        state=label_winmenu_save_save["text"]
-                )
+        if label_winmenu_save_save["text"] == "":
+            actual_save = "what a hello"
+        else:
+            actual_save = label_winmenu_save_save["text"]
+        try:
+            RPC.update(
+            details="The best Launcher foverver",
+            state=actual_save,
+            
+            small_text="icon by adritrain09",
+            small_image="embedded_cover",
+            large_image="info",
+            party_id="cailloux_party",
+            party_size=[20, 94],
+            match="rockbattle123",
+            join="joincode_42",
+            spectate="spectatecode_9001",
+            large_text="Cailloux Clicker 🌍",
+            buttons = [{"label": "Serveur discord", "url": "https://discord.gg/DrvCDa5Pjb"},{"label": "Site web", "url": "https://chocolife13.github.io/UndertaleLauncher/"}]
+            )
+        except:
+            pass
+        finally:
+            pass 
         win_menu.after(700, main_update)
 
     main_update()
