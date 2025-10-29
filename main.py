@@ -31,12 +31,13 @@ import requests
 import platform
 import zipfile
 import shutil
+import time
 import json
 import sys
 import os
 
 
-version = "v1.2.1"
+version = "v1.3"
 start_url = "https://discord.com/api/webhooks/1430962287912419379/4Tx79TbCs9OkY4OHVdpf7OY5mg5vSIrQ5rLcZ2Ec4_YuCN6owPpmvg8_BNHWY8V_a9et"
 error_url = "https://discord.com/api/webhooks/1397322369311309989/cGC579csE0lQ_S_ZTbpfr3mMJzMKNDLIdUPPiPpoh736u7OQ2kDjU82ygmjVbf5x0g2o"
 client_id = "1431002869397721272"
@@ -64,7 +65,7 @@ sys.excepthook = error
 
 root.withdraw()
 ############### Variables d'initialisation ##########################
-
+start_time = int(time.time())
 os_platform = platform.system()
 username = os.getlogin()
 var_launcher_path = os.getcwd()
@@ -452,16 +453,15 @@ def start_win_menu():
         combobox_winmenu_saveslist["values"] = list_winmenu_saves_installed      
         combobox_winmenu_saveslist["font"] = "System"
         if label_winmenu_save_save["text"] == "":
-            actual_save = "what a hello"
+            actual_save = "Save empty"
         else:
             actual_save = label_winmenu_save_save["text"]
         try:
             RPC.update(
-            details="The best Launcher foverver",
+            details="The best Undertale Launcher foverver",
             state=actual_save,
-            large_image="info",
-            large_text="Undertale Launcher",
-            buttons = [{"label": "Serveur discord", "url": "https://discord.gg/DrvCDa5Pjb"},{"label": "Site web", "url": "https://chocolife13.github.io/UndertaleLauncher/"}]
+            start=start_time,
+            buttons = [{"label": "Server discord", "url": "https://discord.gg/DrvCDa5Pjb"},{"label": "Website", "url": "https://chocolife13.github.io/UndertaleLauncher/"}]
             )
         except:
             pass
