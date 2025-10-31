@@ -50,7 +50,7 @@ root = tk.Tk()
 
 def error(exc_type, exc_value, exc_traceback):
     message = ''.join(traceback.format_exception_only(exc_type, exc_value)).strip()
-    yes = messagebox.askyesno("An error has ocurred", f"{message}\n\n Do you want to seen this error in the discord server ?")
+    yes = messagebox.askyesno("An error has ocurred", f"{message}\n\n Do you want to send this error in the discord server ?")
     if yes:
         
         trace = ''.join(traceback.format_exception(exc_type, exc_value, exc_traceback)).strip()
