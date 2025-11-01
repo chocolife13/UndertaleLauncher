@@ -1,4 +1,0 @@
-pypresence
-playsound==1.2.2
-Pillow
-requests
